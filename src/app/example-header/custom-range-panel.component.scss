@@ -25,6 +25,12 @@ $height:268px;
 }
 
 
-.mat-button.mat-primary, .mat-icon-button.mat-primary, .mat-stroked-button.mat-primary {
-  color:unset !important;
+.mat-button.mat-primary, .mat-icon-button.mat-primary, .mat-stroked-button.mat-primary{
+  color:black !important;
+  font-weight: normal !important;
 }
+.custom-range-btn.mat-button.mat-primary, .custom-range-btn.mat-icon-button.mat-primary, .custom-range-btn.mat-stroked-button.mat-primary{
+  color:black !important;
+  font-weight: bold !important;
+}
+

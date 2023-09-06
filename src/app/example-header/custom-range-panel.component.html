@@ -4,6 +4,7 @@
     mat-button
     color="primary"
     (click)="selectRange(item)"
+    [ngClass]="{'custom-range-btn': item === 'Custom range'}"
   >
     {{ item }}
   </button>
