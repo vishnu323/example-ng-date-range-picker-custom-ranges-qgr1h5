@@ -3,14 +3,12 @@ import { DateAdapter } from '@angular/material/core';
 import { MatDateRangePicker } from '@angular/material/datepicker';
 
 const customPresets = [
-  'today',
-  'last 7 days',
-  'this week',
-  'this month',
-  'this year',
-  'last week',
-  'last month',
-  'last year',
+  'Today',
+  'Yesterday',
+  'Last 7 days',
+  'Last 30 days',
+  'Last 90 days',
+  'Custom range'
 ] as const; // convert to readonly tuple of string literals
 
 // equivalent to "today" | "last 7 days" | ... | "last year"
@@ -45,34 +43,29 @@ export class CustomRangePanelComponent<D> {
     const year = this.dateAdapter.getYear(today);
 
     switch (rangeName) {
-      case 'today':
+      case 'Today':
         return [today, today];
-      case 'last 7 days': {
+      case 'Yesterday': {
+        const start = this.dateAdapter.addCalendarDays(today, -1);
+        return [start, today];
+      }
+      case 'Last 7 days': {
         const start = this.dateAdapter.addCalendarDays(today, -6);
         return [start, today];
       }
-      case 'this week': {
-        return this.calculateWeek(today);
-      }
-      case 'this month': {
-        return this.calculateMonth(today);
-      }
-      case 'this year': {
-        const start = this.dateAdapter.createDate(year, 0, 1);
-        const end = this.dateAdapter.createDate(year, 11, 31);
+      case 'Last 30 days':{
+        const end = today;
+        const start = this.dateAdapter.addCalendarDays(today, -30);
         return [start, end];
       }
-      case 'last week': {
-        const thisDayLastWeek = this.dateAdapter.addCalendarDays(today, -7);
-        return this.calculateWeek(thisDayLastWeek);
+      case 'Last 90 days': {
+        const end = today;
+        const start = this.dateAdapter.addCalendarDays(today, -90);
+        return [start, end];
       }
-      case 'last month': {
-        const thisDayLastMonth = this.dateAdapter.addCalendarMonths(today, -1);
-        return this.calculateMonth(thisDayLastMonth);
-      }
-      case 'last year': {
-        const start = this.dateAdapter.createDate(year - 1, 0, 1);
-        const end = this.dateAdapter.createDate(year - 1, 11, 31);
+      case 'Custom range':{
+        const end = today;
+        const start = this.dateAdapter.addCalendarDays(today, -90);
         return [start, end];
       }
       default:
@@ -82,26 +75,6 @@ export class CustomRangePanelComponent<D> {
         // "Type 'string' is not assignable to type '[start: D, end: D]'"
         return rangeName;
     }
-  }
-
-  private calculateMonth(forDay: D): [start: D, end: D] {
-    const year = this.dateAdapter.getYear(forDay);
-    const month = this.dateAdapter.getMonth(forDay);
-    const start = this.dateAdapter.createDate(year, month, 1);
-    const end = this.dateAdapter.addCalendarDays(
-      start,
-      this.dateAdapter.getNumDaysInMonth(forDay) - 1
-    );
-    return [start, end];
-  }
-
-  private calculateWeek(forDay: D): [start: D, end: D] {
-    const deltaStart =
-      this.dateAdapter.getFirstDayOfWeek() -
-      this.dateAdapter.getDayOfWeek(forDay);
-    const start = this.dateAdapter.addCalendarDays(forDay, deltaStart);
-    const end = this.dateAdapter.addCalendarDays(start, 6);
-    return [start, end];
   }
 
   private get today(): D {
