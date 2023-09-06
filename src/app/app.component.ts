@@ -17,7 +17,28 @@ export class AppComponent {
   }
 
   range = new FormGroup({
-    start: new FormControl(),
-    end: new FormControl(),
+    start: new FormControl(new Date()),
+    end: new FormControl(new Date()),
   });
+
+  public getDateFormat = (dateString:string) =>{
+    const date = new Date(dateString);
+    const month = String(date.getMonth() + 1).padStart(2, '0'); 
+    const day = String(date.getDate()).padStart(2, '0');
+    const year = date.getFullYear();
+    const formattedDate = `${month}-${day}-${year}`;
+    return formattedDate;
+  }
+
+  public parseRange = () =>{
+    const start = this.getDateFormat(this.range.value.start);
+    const end = this.getDateFormat(this.range.value.end);
+
+    const object = {
+      "start" : start,
+      "end" : end
+    }
+    
+    return object;
+  }
 }
