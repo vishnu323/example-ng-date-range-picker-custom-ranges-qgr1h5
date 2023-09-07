@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, HostBinding } from '@angular/core';
 import { DateAdapter } from '@angular/material/core';
 import { MatDateRangePicker } from '@angular/material/datepicker';
-
+import { GlobalValueService } from '../global-value.service';
 const customPresets = [
   'Today',
   'Yesterday',
@@ -25,11 +25,35 @@ export class CustomRangePanelComponent<D> {
   readonly customPresets = customPresets;
   @HostBinding('class.touch-ui')
   readonly isTouchUi = this.picker.touchUi;
+  public todayVar: boolean = true;
 
   constructor(
     private dateAdapter: DateAdapter<D>,
-    private picker: MatDateRangePicker<D>
-  ) {}
+    private picker: MatDateRangePicker<D>,
+    private globalValueService: GlobalValueService
+    
+  ) {
+  }
+
+  updateGlobalValue(newValue: any) {
+    this.globalValueService.setGlobalValue(newValue);
+  }
+
+  // Example of getting the global value
+  getGlobalValue() {
+    return this.globalValueService.getGlobalValue();
+  }
+
+  applyClassOrStyleOnce() {
+    const ref:any = document.querySelector(`#Today`);
+    ref.style.backgroundColor = "blue"
+  }
+
+  ngAfterViewInit() {
+    if(this.getGlobalValue()){
+      this.applyClassOrStyleOnce();
+    }
+  }
   // called when user selects a range preset:
   selectRange(rangeName: CustomPreset): void {
     const [start, end] = this.calculateDateRange(rangeName);
@@ -39,9 +63,13 @@ export class CustomRangePanelComponent<D> {
   }
 
   idSelector = (id:string) =>{
-    const ref:any = document.querySelector(`#${id}`);
-    ref.style.backgroundColor = "blue"
-    console.log("vishnu123",ref);
+      const ref:any = document.querySelector(`#${this.replaceSpacesWithHyphens(id)}`);
+      ref.style.backgroundColor = "blue"
+      if(id === "Today"){
+        this.updateGlobalValue(true);
+      }else{
+        this.updateGlobalValue(false);
+      }
   }
 
     replaceSpacesWithHyphens = (inputString:any) =>{
