@@ -1,7 +1,8 @@
 import { Component,ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ExampleHeaderComponent } from './example-header/example-header.component';
-import { MatDateRangePicker } from '@angular/material/datepicker';
+import { MatDateRangePicker ,MatDatepickerInputEvent} from '@angular/material/datepicker';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -41,4 +42,11 @@ export class AppComponent {
     
     return object;
   }
+
+  calendarHandler(event: MatDatepickerInputEvent<Date>) {
+    const { value, target } = event;
+    console.log("target",target)
+  }
+
+   
 }
