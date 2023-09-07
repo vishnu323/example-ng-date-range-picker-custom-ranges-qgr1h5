@@ -105,9 +105,10 @@ export class CustomRangePanelComponent<D> {
       case 'Custom range':{
         const end = today;
         const start = this.dateAdapter.addCalendarDays(today, -90);
-        return [start, end];
+        return [null, null];
       }
       default:
+      console.log(" vishnu123556")
         // exhaustiveness check;
         // rangeName has type never, if every possible value is handled in the switch cases.
         // Otherwise, the following line will result in compiler error:
