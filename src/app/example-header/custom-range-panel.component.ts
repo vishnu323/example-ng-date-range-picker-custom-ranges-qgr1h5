@@ -51,7 +51,9 @@ export class CustomRangePanelComponent<D> {
 
   ngAfterViewInit() {
     if(this.getGlobalValue()){
-      this.applyClassOrStyleOnce();
+      const ref:any = document.querySelector(`#${this.replaceSpacesWithHyphens(this.getGlobalValue())}`);
+      ref.style.backgroundColor = "blue"
+      // this.applyClassOrStyleOnce();
     }
   }
   // called when user selects a range preset:
@@ -59,17 +61,23 @@ export class CustomRangePanelComponent<D> {
     const [start, end] = this.calculateDateRange(rangeName);
     this.picker.select(start);
     this.picker.select(end);
-    this.picker.close();
+    if(start && end){
+      this.picker.close();
+    }
+    
+  }
+ 
+  setBackGround = (id:string,type:string) =>{
+    const ref:any = document.querySelector(`#${this.replaceSpacesWithHyphens(id)}`);
+    if(ref){
+      ref.style.backgroundColor=type;
+    }
   }
 
+
   idSelector = (id:string) =>{
-      const ref:any = document.querySelector(`#${this.replaceSpacesWithHyphens(id)}`);
-      ref.style.backgroundColor = "blue"
-      if(id === "Today"){
-        this.updateGlobalValue(true);
-      }else{
-        this.updateGlobalValue(false);
-      }
+      this.setBackGround(id,"blue");
+      this.updateGlobalValue(id);
   }
 
     replaceSpacesWithHyphens = (inputString:any) =>{

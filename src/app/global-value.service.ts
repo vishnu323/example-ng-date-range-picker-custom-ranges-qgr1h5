@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class GlobalValueService {
-  private globalValue: boolean= true;
+  private globalValue: string= "Today";
 
   constructor() { }
   getGlobalValue() {
