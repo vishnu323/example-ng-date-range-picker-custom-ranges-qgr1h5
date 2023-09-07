@@ -38,10 +38,21 @@ export class CustomRangePanelComponent<D> {
     this.picker.close();
   }
 
+  idSelector = (id:string) =>{
+    const ref:any = document.querySelector(`#${id}`);
+    ref.style.backgroundColor = "blue"
+    console.log("vishnu123",ref);
+  }
+
+    replaceSpacesWithHyphens = (inputString:any) =>{
+      return inputString.replace(/ /g, '-');
+    }
+  
+
   private calculateDateRange(rangeName: CustomPreset): [start: D, end: D] {
     const today = this.today;
     const year = this.dateAdapter.getYear(today);
-
+    this.idSelector(rangeName);
     switch (rangeName) {
       case 'Today':
         return [today, today];

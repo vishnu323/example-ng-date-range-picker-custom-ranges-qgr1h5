@@ -5,6 +5,7 @@
     color="primary"
     (click)="selectRange(item)"
     [ngClass]="{'custom-range-btn': item === 'Custom range'}"
+    [id]="replaceSpacesWithHyphens(item)"
   >
     {{ item }}
   </button>
