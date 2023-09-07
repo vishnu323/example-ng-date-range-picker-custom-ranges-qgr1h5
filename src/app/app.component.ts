@@ -43,9 +43,8 @@ export class AppComponent {
     return object;
   }
 
-  calendarHandler(event: MatDatepickerInputEvent<Date>) {
-    const { value, target } = event;
-    console.log("target",target)
+  calendarHandler() {
+    console.log("target")
   }
 
    
