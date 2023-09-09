@@ -27,3 +27,11 @@
   
   
 }
+
+::ng-deep .mat-date-range-input-separator{
+  display: none;
+}
+
+::ng-deep .mat-date-range-input-end-wrapper{
+  display: none;
+}

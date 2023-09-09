@@ -33,8 +33,17 @@ export class CustomRangePanelComponent<D> {
     private globalValueService: GlobalValueService
     
   ) {
+    
+    
   }
 
+
+  detachToDate(state="block"){
+    const seperator:any = document.querySelector('.mat-date-range-input-separator');
+    const endRef:any = document.querySelector('.mat-date-range-input-end-wrapper');
+    endRef.style.display=state;
+    seperator.style.display=state;
+  }
   updateGlobalValue(newValue: any) {
     this.globalValueService.setGlobalValue(newValue);
   }
@@ -42,11 +51,6 @@ export class CustomRangePanelComponent<D> {
   // Example of getting the global value
   getGlobalValue() {
     return this.globalValueService.getGlobalValue();
-  }
-
-  applyClassOrStyleOnce() {
-    const ref:any = document.querySelector(`#Today`);
-    ref.style.backgroundColor = "blue"
   }
 
   ngAfterViewInit() {
@@ -91,26 +95,32 @@ export class CustomRangePanelComponent<D> {
     this.idSelector(rangeName);
     switch (rangeName) {
       case 'Today':
+        this.detachToDate("none")
         return [today, today];
       case 'Yesterday': {
+        this.detachToDate("none")
         const start = this.dateAdapter.addCalendarDays(today, -1);
         return [start, today];
       }
       case 'Last 7 days': {
+        this.detachToDate()
         const start = this.dateAdapter.addCalendarDays(today, -6);
         return [start, today];
       }
       case 'Last 30 days':{
+        this.detachToDate()
         const end = today;
         const start = this.dateAdapter.addCalendarDays(today, -30);
         return [start, end];
       }
       case 'Last 90 days': {
+        this.detachToDate()
         const end = today;
         const start = this.dateAdapter.addCalendarDays(today, -90);
         return [start, end];
       }
       case 'Custom range':{
+        this.detachToDate()
         const end = today;
         const start = this.dateAdapter.addCalendarDays(today, -90);
         return [null, null];
